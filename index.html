@@ -6,37 +6,47 @@
     <title>حساب النسبة الموزونة</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Cairo', sans-serif;
             direction: rtl;
             text-align: right;
             margin: 0;
-            background-color: #eef2f3;
+            background-color: #f0f0f0;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease;
         }
         .container {
-            max-width: 1000px;
+            max-width: 800px;
             background: #ffffff;
-            padding: 40px;
+            padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
             box-sizing: border-box;
-            width: 90%;
-            margin: 20px;
+            width: 100%;
+            transition: box-shadow 0.3s ease;
+        }
+        .container:hover {
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
         }
         h1 {
             color: #e74c3c;
             text-align: center;
-            margin-bottom: 30px;
-            font-size: 2.5em;
+            margin-bottom: 20px;
+            font-size: 2em;
             position: relative;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
         h1 i {
             position: absolute;
-            right: 20px;
+            right: 10px;
             top: 50%;
             transform: translateY(-50%);
             color: #e74c3c;
@@ -44,89 +54,128 @@
         .section {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
         }
-        .section div {
+        .box {
             flex: 0 0 48%;
             background: #f9f9f9;
-            padding: 20px;
+            padding: 15px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-            margin-bottom: 20px;
-            position: relative;
-        }
-        .section div h2 {
-            color: #34495e;
-            font-size: 1.8em;
             margin-bottom: 15px;
             position: relative;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
         }
-        .section div h2 i {
+        .box:hover {
+            background-color: #f0f0f0;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        .box h2 {
+            color: #34495e;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            position: relative;
+        }
+        .box h2 i {
             position: absolute;
-            right: -35px;
+            right: -30px;
             top: 50%;
             transform: translateY(-50%);
             color: #34495e;
         }
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .row label, .row input {
+            flex: 0 0 48%;
+        }
         label {
-            display: block;
-            margin: 15px 0 5px;
             color: #34495e;
             font-weight: bold;
         }
         input {
             width: calc(100% - 22px);
-            padding: 15px;
-            margin-bottom: 15px;
+            padding: 10px;
             border: 1px solid #bdc3c7;
             border-radius: 5px;
             box-sizing: border-box;
-            font-size: 1em;
+            font-size: 0.9em;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        input:focus {
+            border-color: #e74c3c;
+            box-shadow: 0 0 5px rgba(231, 76, 60, 0.5);
+            outline: none;
         }
         .percentage::after {
             content: " %";
         }
         button {
             width: 100%;
-            padding: 20px;
+            padding: 15px;
             border: none;
             border-radius: 5px;
             background-color: #e74c3c;
             color: white;
-            font-size: 1.5em;
+            font-size: 1.2em;
             cursor: pointer;
-            margin-top: 20px;
-            transition: background-color 0.3s ease;
+            margin-top: 15px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
         }
         button:hover {
             background-color: #c0392b;
+            transform: translateY(-2px);
+        }
+        .result, .error {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 1.5em;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease, transform 1s ease;
         }
         .result {
-            margin-top: 30px;
-            padding: 20px;
-            background: #3498db;
-            border-radius: 5px;
-            font-size: 1.8em;
+            background: #2ecc71;
             color: #ffffff;
-            text-align: center;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         .error {
-            margin-top: 30px;
-            padding: 20px;
             background: #e74c3c;
-            border-radius: 5px;
-            font-size: 1.8em;
             color: #ffffff;
-            text-align: center;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .result.show, .error.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
         }
         @media (max-width: 768px) {
-            .section {
-                flex-direction: column;
-            }
-            .section div {
+            .box {
                 flex: 0 0 100%;
+            }
+            .row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .row label, .row input {
+                flex: 0 0 100%;
+                margin-bottom: 10px;
+            }
+            h1 i {
+                right: 50%;
+                transform: translate(50%, -50%);
+            }
+            .box h2 i {
+                right: 10px;
+                transform: translate(0, -50%);
             }
         }
     </style>
@@ -135,31 +184,39 @@
     <div class="container">
         <h1><i class="fas fa-calculator"></i> حساب النسبة الموزونة</h1>
         <div class="section">
-            <div>
+            <div class="box">
                 <h2><i class="fas fa-user-graduate"></i> درجات الطالب</h2>
-                <label>النسبة التراكمية للثانوية العامة:</label>
-                <input type="number" id="highSchool" class="percentage" placeholder="أدخل النسبة المئوية" min="0" max="100">
-                
-                <label>درجة القدرات العامة:</label>
-                <input type="number" id="aptitude" class="percentage" placeholder="أدخل النسبة المئوية" min="0" max="100">
-                
-                <label>درجة الاختبار التحصيلي:</label>
-                <input type="number" id="achievement" class="percentage" placeholder="أدخل النسبة المئوية" min="0" max="100">
+                <div class="row">
+                    <label>النسبة التراكمية للثانوية العامة:</label>
+                    <input type="number" id="highSchool" class="percentage" placeholder="أدخل النسبة المئوية" min="0" max="100">
+                </div>
+                <div class="row">
+                    <label>درجة القدرات العامة:</label>
+                    <input type="number" id="aptitude" class="percentage" placeholder="أدخل النسبة المئوية" min="0" max="100">
+                </div>
+                <div class="row">
+                    <label>درجة الاختبار التحصيلي:</label>
+                    <input type="number" id="achievement" class="percentage" placeholder="أدخل النسبة المئوية" min="0" max="100">
+                </div>
+                <div id="resultContainer" class="result"></div>
             </div>
-            <div>
+            <div class="box">
                 <h2><i class="fas fa-university"></i> معايير الجامعة</h2>
-                <label>معيار الثانوية العامة:</label>
-                <input type="number" id="highSchoolWeight" class="percentage" placeholder="أدخل النسبة المئوية" value="30" min="0" max="100">
-                
-                <label>معيار القدرات العامة:</label>
-                <input type="number" id="aptitudeWeight" class="percentage" placeholder="أدخل النسبة المئوية" value="30" min="0" max="100">
-                
-                <label>معيار الاختبار التحصيلي:</label>
-                <input type="number" id="achievementWeight" class="percentage" placeholder="أدخل النسبة المئوية" value="40" min="0" max="100">
+                <div class="row">
+                    <label>معيار الثانوية العامة:</label>
+                    <input type="number" id="highSchoolWeight" class="percentage" value="30" min="0" max="100" readonly>
+                </div>
+                <div class="row">
+                    <label>معيار القدرات العامة:</label>
+                    <input type="number" id="aptitudeWeight" class="percentage" value="30" min="0" max="100" readonly>
+                </div>
+                <div class="row">
+                    <label>معيار الاختبار التحصيلي:</label>
+                    <input type="number" id="achievementWeight" class="percentage" value="40" min="0" max="100" readonly>
+                </div>
             </div>
         </div>
         <button onclick="calculateWeightedPercentage()">احسب النسبة الموزونة</button>
-        <div id="resultContainer"></div>
     </div>
 
     <script>
@@ -174,21 +231,21 @@
             const totalWeight = highSchoolWeight + aptitudeWeight + achievementWeight;
 
             const resultContainer = document.getElementById('resultContainer');
-            resultContainer.innerHTML = ''; // Clear previous results
+            resultContainer.classList.remove('show'); // Hide previous results
 
             if (totalWeight !== 1) {
                 const errorDiv = document.createElement('div');
                 errorDiv.className = 'error';
                 errorDiv.textContent = 'مجموع معايير الجامعة يجب أن يساوي 100%';
-                resultContainer.appendChild(errorDiv);
+                resultContainer.replaceWith(errorDiv);
+                errorDiv.classList.add('show');
                 return;
             }
 
             const weightedPercentage = (highSchool * highSchoolWeight) + (aptitude * aptitudeWeight) + (achievement * achievementWeight);
-            const resultDiv = document.createElement('div');
-            resultDiv.className = 'result';
-            resultDiv.textContent = `النسبة الموزونة هي: ${weightedPercentage.toFixed(2)}%`;
-            resultContainer.appendChild(resultDiv);
+            resultContainer.className = 'result';
+            resultContainer.textContent = `النسبة الموزونة هي: ${weightedPercentage.toFixed(2)}%`;
+            resultContainer.classList.add('show');
         }
     </script>
 </body>
