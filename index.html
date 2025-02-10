@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حساب النسبة الموزونة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            direction: rtl;
+            text-align: right;
+            margin: 0;
+            background-color: #eef2f3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1000px;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            width: 90%;
+            margin: 20px;
+        }
+        h1 {
+            color: #e74c3c;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            position: relative;
+        }
+        h1 i {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #e74c3c;
+        }
+        .section {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        .section div {
+            flex: 0 0 48%;
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .section div h2 {
+            color: #34495e;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        .section div h2 i {
+            position: absolute;
+            right: -35px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #34495e;
+        }
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            color: #34495e;
+            font-weight: bold;
+        }
+        input {
+            width: calc(100% - 22px);
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #bdc3c7;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 1em;
+        }
+        .percentage::after {
+            content: " %";
+        }
+        button {
+            width: 100%;
+            padding: 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #e74c3c;
+            color: white;
+            font-size: 1.5em;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #c0392b;
+        }
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            background: #3498db;
+            border-radius: 5px;
+            font-size: 1.8em;
+            color: #ffffff;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .error {
+            margin-top: 30px;
+            padding: 20px;
+            background: #e74c3c;
+            border-radius: 5px;
+            font-size: 1.8em;
+            color: #ffffff;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        @media (max-width: 768px) {
+            .section {
+                flex-direction: column;
+            }
+            .section div {
+                flex: 0 0 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-calculator"></i> حساب النسبة الموزونة</h1>
+        <div class="section">
+            <div>
+                <h2><i class="fas fa-user-graduate"></i> درجات الطالب</h2>
+                <label>النسبة التراكمية للثانوية العامة:</label>
+                <input type="number" id="highSchool" class="percentage" placeholder="أدخل النسبة المئوية" min="0" max="100">
+                
+                <label>درجة القدرات العامة:</label>
+                <input type="number" id="aptitude" class="percentage" placeholder="أدخل النسبة المئوية" min="0" max="100">
+                
+                <label>درجة الاختبار التحصيلي:</label>
+                <input type="number" id="achievement" class="percentage" placeholder="أدخل النسبة المئوية" min="0" max="100">
+            </div>
+            <div>
+                <h2><i class="fas fa-university"></i> معايير الجامعة</h2>
+                <label>معيار الثانوية العامة:</label>
+                <input type="number" id="highSchoolWeight" class="percentage" placeholder="أدخل النسبة المئوية" value="30" min="0" max="100">
+                
+                <label>معيار القدرات العامة:</label>
+                <input type="number" id="aptitudeWeight" class="percentage" placeholder="أدخل النسبة المئوية" value="30" min="0" max="100">
+                
+                <label>معيار الاختبار التحصيلي:</label>
+                <input type="number" id="achievementWeight" class="percentage" placeholder="أدخل النسبة المئوية" value="40" min="0" max="100">
+            </div>
+        </div>
+        <button onclick="calculateWeightedPercentage()">احسب النسبة الموزونة</button>
+        <div id="resultContainer"></div>
+    </div>
+
+    <script>
+        function calculateWeightedPercentage() {
+            const highSchool = parseFloat(document.getElementById('highSchool').value);
+            const aptitude = parseFloat(document.getElementById('aptitude').value);
+            const achievement = parseFloat(document.getElementById('achievement').value);
+            const highSchoolWeight = parseFloat(document.getElementById('highSchoolWeight').value) / 100;
+            const aptitudeWeight = parseFloat(document.getElementById('aptitudeWeight').value) / 100;
+            const achievementWeight = parseFloat(document.getElementById('achievementWeight').value) / 100;
+
+            const totalWeight = highSchoolWeight + aptitudeWeight + achievementWeight;
+
+            const resultContainer = document.getElementById('resultContainer');
+            resultContainer.innerHTML = ''; // Clear previous results
+
+            if (totalWeight !== 1) {
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'error';
+                errorDiv.textContent = 'مجموع معايير الجامعة يجب أن يساوي 100%';
+                resultContainer.appendChild(errorDiv);
+                return;
+            }
+
+            const weightedPercentage = (highSchool * highSchoolWeight) + (aptitude * aptitudeWeight) + (achievement * achievementWeight);
+            const resultDiv = document.createElement('div');
+            resultDiv.className = 'result';
+            resultDiv.textContent = `النسبة الموزونة هي: ${weightedPercentage.toFixed(2)}%`;
+            resultContainer.appendChild(resultDiv);
+        }
+    </script>
+</body>
+</html>
