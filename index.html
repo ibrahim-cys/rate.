@@ -204,15 +204,15 @@
                 <h2><i class="fas fa-university"></i> معايير الجامعة</h2>
                 <div class="row">
                     <label>معيار الثانوية العامة:</label>
-                    <input type="number" id="highSchoolWeight" class="percentage" value="30" min="0" max="100" readonly>
+                    <input type="number" id="highSchoolWeight" class="percentage" value="30" min="0" max="100">
                 </div>
                 <div class="row">
                     <label>معيار القدرات العامة:</label>
-                    <input type="number" id="aptitudeWeight" class="percentage" value="30" min="0" max="100" readonly>
+                    <input type="number" id="aptitudeWeight" class="percentage" value="30" min="0" max="100">
                 </div>
                 <div class="row">
                     <label>معيار الاختبار التحصيلي:</label>
-                    <input type="number" id="achievementWeight" class="percentage" value="40" min="0" max="100" readonly>
+                    <input type="number" id="achievementWeight" class="percentage" value="40" min="0" max="100">
                 </div>
             </div>
         </div>
@@ -224,27 +224,31 @@
             const highSchool = parseFloat(document.getElementById('highSchool').value);
             const aptitude = parseFloat(document.getElementById('aptitude').value);
             const achievement = parseFloat(document.getElementById('achievement').value);
+            
+            if (isNaN(highSchool) || isNaN(aptitude) || isNaN(achievement)) {
+                displayResult('error', 'يرجى التأكد من إدخال جميع القيم');
+                return;
+            }
+
             const highSchoolWeight = parseFloat(document.getElementById('highSchoolWeight').value) / 100;
             const aptitudeWeight = parseFloat(document.getElementById('aptitudeWeight').value) / 100;
             const achievementWeight = parseFloat(document.getElementById('achievementWeight').value) / 100;
 
             const totalWeight = highSchoolWeight + aptitudeWeight + achievementWeight;
 
-            const resultContainer = document.getElementById('resultContainer');
-            resultContainer.classList.remove('show'); // Hide previous results
-
             if (totalWeight !== 1) {
-                const errorDiv = document.createElement('div');
-                errorDiv.className = 'error';
-                errorDiv.textContent = 'مجموع معايير الجامعة يجب أن يساوي 100%';
-                resultContainer.replaceWith(errorDiv);
-                errorDiv.classList.add('show');
+                displayResult('error', 'مجموع معايير الجامعة يجب أن يساوي 100%');
                 return;
             }
 
             const weightedPercentage = (highSchool * highSchoolWeight) + (aptitude * aptitudeWeight) + (achievement * achievementWeight);
-            resultContainer.className = 'result';
-            resultContainer.textContent = `النسبة الموزونة هي: ${weightedPercentage.toFixed(2)}%`;
+            displayResult('result', `النسبة الموزونة هي: ${weightedPercentage.toFixed(2)}%`);
+        }
+
+        function displayResult(type, message) {
+            const resultContainer = document.getElementById('resultContainer');
+            resultContainer.className = type;
+            resultContainer.textContent = message;
             resultContainer.classList.add('show');
         }
     </script>
