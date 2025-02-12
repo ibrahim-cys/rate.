@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ar">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
-
         body {
             font-family: 'Cairo', sans-serif;
             direction: rtl;
@@ -22,6 +22,7 @@
             box-sizing: border-box;
             transition: background-color 0.3s ease;
         }
+        
         .container {
             max-width: 800px;
             background: #ffffff;
@@ -32,9 +33,11 @@
             width: 100%;
             transition: box-shadow 0.3s ease;
         }
+        
         .container:hover {
             box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
         }
+        
         h1 {
             color: #e74c3c;
             text-align: center;
@@ -44,6 +47,7 @@
             text-transform: uppercase;
             letter-spacing: 2px;
         }
+        
         h1 i {
             position: absolute;
             right: 10px;
@@ -51,12 +55,14 @@
             transform: translateY(-50%);
             color: #e74c3c;
         }
+        
         .section {
             display: flex;
             justify-content: space-between;
             margin-bottom: 20px;
             flex-wrap: wrap;
         }
+        
         .box {
             flex: 0 0 48%;
             background: #f9f9f9;
@@ -69,16 +75,19 @@
             flex-direction: column;
             transition: background-color 0.3s ease, box-shadow 0.3s ease;
         }
+        
         .box:hover {
             background-color: #f0f0f0;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
         }
+        
         .box h2 {
             color: #34495e;
             font-size: 1.5em;
             margin-bottom: 10px;
             position: relative;
         }
+        
         .box h2 i {
             position: absolute;
             right: -30px;
@@ -86,19 +95,24 @@
             transform: translateY(-50%);
             color: #34495e;
         }
+        
         .row {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 10px;
         }
-        .row label, .row input {
+        
+        .row label,
+        .row input {
             flex: 0 0 48%;
         }
+        
         label {
             color: #34495e;
             font-weight: bold;
         }
+        
         input {
             width: calc(100% - 22px);
             padding: 10px;
@@ -108,14 +122,17 @@
             font-size: 0.9em;
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
+        
         input:focus {
             border-color: #e74c3c;
             box-shadow: 0 0 5px rgba(231, 76, 60, 0.5);
             outline: none;
         }
+        
         .percentage::after {
             content: " %";
         }
+        
         button {
             width: 100%;
             padding: 15px;
@@ -128,11 +145,14 @@
             margin-top: 15px;
             transition: background-color 0.3s ease, transform 0.3s ease;
         }
+        
         button:hover {
             background-color: #c0392b;
             transform: translateY(-2px);
         }
-        .result, .error {
+        
+        .result,
+        .error {
             margin-top: 15px;
             padding: 15px;
             border-radius: 5px;
@@ -144,19 +164,24 @@
             transform: translateY(20px);
             transition: opacity 1s ease, transform 1s ease;
         }
+        
         .result {
             background: #2ecc71;
             color: #ffffff;
         }
+        
         .error {
             background: #e74c3c;
             color: #ffffff;
         }
-        .result.show, .error.show {
+        
+        .result.show,
+        .error.show {
             display: block;
             opacity: 1;
             transform: translateY(0);
         }
+        
         @media (max-width: 768px) {
             .box {
                 flex: 0 0 100%;
@@ -165,7 +190,8 @@
                 flex-direction: column;
                 align-items: flex-start;
             }
-            .row label, .row input {
+            .row label,
+            .row input {
                 flex: 0 0 100%;
                 margin-bottom: 10px;
             }
@@ -178,8 +204,26 @@
                 transform: translate(0, -50%);
             }
         }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.5em;
+            }
+            .box h2 {
+                font-size: 1.2em;
+            }
+            button {
+                font-size: 1em;
+                padding: 10px;
+            }
+            .result,
+            .error {
+                font-size: 1.2em;
+            }
+        }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1><i class="fas fa-calculator"></i> حساب النسبة الموزونة</h1>
@@ -224,7 +268,7 @@
             const highSchool = parseFloat(document.getElementById('highSchool').value);
             const aptitude = parseFloat(document.getElementById('aptitude').value);
             const achievement = parseFloat(document.getElementById('achievement').value);
-            
+
             if (isNaN(highSchool) || isNaN(aptitude) || isNaN(achievement)) {
                 displayResult('error', 'يرجى التأكد من إدخال جميع القيم');
                 return;
@@ -253,4 +297,5 @@
         }
     </script>
 </body>
+
 </html>
