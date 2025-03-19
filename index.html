@@ -1,287 +1,135 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>حساب النسبة الموزونة</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
         body {
             font-family: 'Cairo', sans-serif;
-            direction: rtl;
-            text-align: right;
             margin: 0;
+            padding: 20px;
             background-color: #f0f0f0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 10px;
+            text-align: center;
             box-sizing: border-box;
-            transition: background-color 0.3s ease;
         }
 
         .container {
             max-width: 800px;
+            margin: 0 auto;
             background: #ffffff;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-            box-sizing: border-box;
-            width: 100%;
-            transition: box-shadow 0.3s ease;
-        }
-
-        .container:hover {
-            box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
         }
 
         h1 {
             color: #e74c3c;
-            text-align: center;
             margin-bottom: 20px;
-            font-size: 1.8em;
-            position: relative;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        h1 i {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #e74c3c;
-        }
-
-        .section {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
+            font-size: 1.5em;
         }
 
         .box {
-            flex: 0 0 48%;
             background: #f9f9f9;
             padding: 15px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-            margin-bottom: 15px;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .box:hover {
-            background-color: #f0f0f0;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
         }
 
         .box h2 {
             color: #34495e;
             font-size: 1.2em;
             margin-bottom: 10px;
-            position: relative;
-        }
-
-        .box h2 i {
-            position: absolute;
-            right: -30px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #34495e;
         }
 
         .row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             margin-bottom: 10px;
         }
 
-        .row label,
-        .row input {
-            flex: 0 0 48%;
-        }
-
         label {
+            display: block;
             color: #34495e;
             font-weight: bold;
+            margin-bottom: 5px;
         }
 
         input {
-            width: calc(100% - 22px);
-            padding: 8px;
+            width: 100%;
+            padding: 10px;
             border: 1px solid #bdc3c7;
             border-radius: 5px;
             box-sizing: border-box;
-            font-size: 0.9em;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        input:focus {
-            border-color: #e74c3c;
-            box-shadow: 0 0 5px rgba(231, 76, 60, 0.5);
-            outline: none;
-        }
-
-        .percentage::after {
-            content: " %";
         }
 
         button {
             width: 100%;
-            padding: 12px;
+            padding: 15px;
             border: none;
             border-radius: 5px;
             background-color: #e74c3c;
             color: white;
-            font-size: 1.1em;
+            font-size: 1em;
             cursor: pointer;
-            margin-top: 15px;
-            transition: background-color 0.3s ease, transform 0.3s ease;
         }
 
-        button:hover {
-            background-color: #c0392b;
-            transform: translateY(-2px);
-        }
-
-        .result,
-        .error {
+        .result {
             margin-top: 15px;
             padding: 15px;
             border-radius: 5px;
             font-size: 1.2em;
             text-align: center;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             display: none;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 1s ease, transform 1s ease;
         }
 
-        .result {
+        .result.success {
             background: #2ecc71;
             color: #ffffff;
         }
 
-        .error {
+        .result.error {
             background: #e74c3c;
             color: #ffffff;
-        }
-
-        .result.show,
-        .error.show {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        @media (max-width: 768px) {
-            .box {
-                flex: 0 0 100%;
-            }
-
-            .row {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .row label,
-            .row input {
-                flex: 0 0 100%;
-                margin-bottom: 10px;
-            }
-
-            h1 i {
-                right: 50%;
-                transform: translate(50%, -50%);
-            }
-
-            .box h2 i {
-                right: 10px;
-                transform: translate(0, -50%);
-            }
-
-            h1 {
-                font-size: 1.5em;
-            }
-
-            button {
-                font-size: 1em;
-                padding: 10px;
-            }
-
-            .result,
-            .error {
-                font-size: 1.2em;
-            }
-        }
-
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 1.4em;
-            }
-
-            .box h2 {
-                font-size: 1.1em;
-            }
-
-            button {
-                font-size: 1em;
-                padding: 8px;
-            }
-
-            .result,
-            .error {
-                font-size: 1.1em;
-            }
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h1><i class="fas fa-calculator"></i> حساب النسبة الموزونة</h1>
-        <div class="section">
-            <div class="box">
-                <h2><i class="fas fa-user-graduate"></i> درجات الطالب</h2>
-                <div class="row">
-                    <label>النسبة التراكمية للثانوية العامة:</label>
-                    <input type="number" id="highSchool" class="percentage" placeholder="أدخل النسبة المئوية" min="0" max="100">
-                </div>
-                <div class="row">
-                    <label>درجة القدرات العامة:</label>
-                    <input type="number" id="aptitude" class="percentage" placeholder="أدخل النسبة المئوية" min="0" max="100">
-                </div>
-                <div class="row">
-                    <label>درجة الاختبار التحصيلي:</label>
-                    <input type="number" id="achievement" class="percentage" placeholder="أدخل النسبة المئوية" min="0" max="100">
-                </div>
-                <div id="resultContainer" class="result"></div>
+        <h1>حساب النسبة الموزونة</h1>
+        <div class="box">
+            <h2>درجات الطالب</h2>
+            <div class="row">
+                <label>النسبة التراكمية للثانوية العامة:</label>
+                <input type="number" id="highSchool" placeholder="أدخل النسبة المئوية" min="0" max="100">
             </div>
-            <div class="box">
-                <h2><i class="fas fa-university"></i> معايير الجامعة</h2>
-                <div class="row">
-                    <label>معيار الثانوية العامة:</label>
-                    <input type="number" id="highSchoolWeight" class="percentage" value="30" min="0" max="100">
-                </div>
-                <div class="row">
-                    <label>معيار القدرات العامة:</label>
-                    <input type="number" id="aptitudeWeight" class="percentage" value="30" min="0" max="100">
-                </div>
-                <div class="row">
-                    <label>معيار الاختبار التحصيلي:</label>
-                    <input type="number" id="achievementWeight" class="percentage" value="40" min="0" max="100">
-                </div>
+            <div class="row">
+                <label>درجة القدرات العامة:</label>
+                <input type="number" id="aptitude" placeholder="أدخل النسبة المئوية" min="0" max="100">
+            </div>
+            <div class="row">
+                <label>درجة الاختبار التحصيلي:</label>
+                <input type="number" id="achievement" placeholder="أدخل النسبة المئوية" min="0" max="100">
+            </div>
+        </div>
+        <div class="box">
+            <h2>معايير الجامعة</h2>
+            <div class="row">
+                <label>معيار الثانوية العامة:</label>
+                <input type="number" id="highSchoolWeight" value="30" min="0" max="100">
+            </div>
+            <div class="row">
+                <label>معيار القدرات العامة:</label>
+                <input type="number" id="aptitudeWeight" value="30" min="0" max="100">
+            </div>
+            <div class="row">
+                <label>معيار الاختبار التحصيلي:</label>
+                <input type="number" id="achievementWeight" value="40" min="0" max="100">
             </div>
         </div>
         <button onclick="calculateWeightedPercentage()">احسب النسبة الموزونة</button>
+        <div id="resultContainer" class="result"></div>
     </div>
 
     <script>
@@ -307,14 +155,14 @@
             }
 
             const weightedPercentage = (highSchool * highSchoolWeight) + (aptitude * aptitudeWeight) + (achievement * achievementWeight);
-            displayResult('result', `النسبة الموزونة هي: ${weightedPercentage.toFixed(2)}%`);
+            displayResult('success', `النسبة الموزونة هي: ${weightedPercentage.toFixed(2)}%`);
         }
 
         function displayResult(type, message) {
             const resultContainer = document.getElementById('resultContainer');
-            resultContainer.className = type;
+            resultContainer.className = `result ${type}`;
             resultContainer.textContent = message;
-            resultContainer.classList.add('show');
+            resultContainer.style.display = 'block';
         }
     </script>
 </body>
